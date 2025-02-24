@@ -46,10 +46,10 @@
 #define WS2813_COLOR_GREEN 		((uint32_t)0xff0000)
 #define WS2813_COLOR_RED 		((uint32_t)0x00ff00)
 #define WS2813_COLOR_BLUE 		((uint32_t)0x0000ff)
+
 /**
  * @}
  */
-
 typedef enum {
 	WS2813_OK, WS2813_PARAMETER_ERROR, WS2813_INTERNAL_ERROR, WS2813_RESULTNB
 } WS2813_Result;
@@ -108,6 +108,7 @@ typedef struct {
 	uint32_t *WS2813_dmaBuffer;
 	TIM_HandleTypeDef *WS2813_htim;
 } WS2813_HandlerTypeDef;
+
 /**
  * @}
  */

@@ -12,6 +12,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "ws2813.h"
 
+WS2813_HandlerTypeDef ledhandler;
 uint8_t u8WS2813_idatasentflag = 0;
 /** @defgroup ws2813_Private_Variables
  * @{
