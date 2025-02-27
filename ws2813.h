@@ -94,6 +94,7 @@ typedef enum {
 	WS2813Yellow,
 	WS2813Orange,
 	WS2813Off,
+	WS2813Rainbow,//available only with OS active
 	WS2813Colnb
 } WS2813_ColorTypeDef;
 /**
@@ -122,5 +123,6 @@ WS2813_Result WS2813_eSetColorval(WS2813_HandlerTypeDef *Fhandler,
 		WS2813_PixelRGBTypeDef fu32ColorVal, uint8_t Fu8LedId);
 void WS28i13_eRainbow(WS2813_HandlerTypeDef *Fhandler, uint32_t u32Speed);
 void WS2813_eTest(TIM_HandleTypeDef *Ftdhtim);
+void WS2813_eProcess(void);
 
 #endif /* YHLIB_WS2813_WS2813_H_ */

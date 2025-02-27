@@ -14,6 +14,7 @@
 
 WS2813_HandlerTypeDef ledhandler;
 uint8_t u8WS2813_idatasentflag = 0;
+uint8_t u8WS2813_iCommand = WS2813Off;
 /** @defgroup ws2813_Private_Variables
  * @{
  */
@@ -204,6 +205,53 @@ void WS2813_eTest(TIM_HandleTypeDef *Ftdhtim)
 			WS28i13_eRainbow(&ledhandler, 100);
 		}
 		HAL_Delay(1000);
+	  }
+}
+
+void WS2813_eProcess(void)
+{
+	  uint32_t ledBuffer[WS2813_DMA_BUFFER_SIZE];
+	  WS2813_PixelRGBTypeDef sColor;
+	  int i,j;
+	  j=0;
+	  uint16_t stepSize = 4;
+	  static int k = 0;
+	  while (1)
+	  {
+		  if(u8WS2813_iCommand!=WS2813Rainbow){
+			  WS2813_eSetColor(&ledhandler, u8WS2813_iCommand, 0);
+		  	  HAL_Delay(1000);
+		  }else{
+			  for (i = (WS2813_NUM_PIXELS - 1); i > 0; i--) {
+				  ledhandler.WS2813_pixel[i].data = ledhandler.WS2813_pixel[i - 1].data;
+			  		}
+
+			  		if (k < 255) {
+			  			sColor.strcolor.dgreen = 254 - k; //[254, 0]
+			  			sColor.strcolor.dred = k + 1;  //[1, 255]
+			  			sColor.strcolor.dblue = 0;
+			  		} else if (k < 510) {
+			  			sColor.strcolor.dgreen = 0;
+			  			sColor.strcolor.dred = 509 - k; //[254, 0]
+			  			sColor.strcolor.dblue = k - 254; //[1, 255]
+			  			j++;
+			  		} else if (k < 765) {
+			  			sColor.strcolor.dgreen = k - 509; //[1, 255];
+			  			sColor.strcolor.dred = 0;
+			  			sColor.strcolor.dblue = 764 - k; //[254, 0]
+			  		}
+			  		k = (k + stepSize) % 765;
+
+			  		// not so bright
+			  		sColor.strcolor.dgreen >>= 2;
+			  		sColor.strcolor.dred >>= 2;
+			  		sColor.strcolor.dblue >>= 2;
+
+			  		ledhandler.WS2813_pixel[0] = sColor;
+			  		WS2813_eSetColorval(&ledhandler, sColor, 0);
+			  		HAL_Delay(100);
+		  }
+
 	  }
 }
 
