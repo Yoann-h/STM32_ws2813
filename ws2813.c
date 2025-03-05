@@ -220,7 +220,7 @@ void WS2813_eProcess(void)
 	  {
 		  if(u8WS2813_iCommand!=WS2813Rainbow){
 			  WS2813_eSetColor(&ledhandler, u8WS2813_iCommand, 0);
-		  	  HAL_Delay(1000);
+			  osDelay(1000);
 		  }else{
 			  for (i = (WS2813_NUM_PIXELS - 1); i > 0; i--) {
 				  ledhandler.WS2813_pixel[i].data = ledhandler.WS2813_pixel[i - 1].data;
@@ -249,7 +249,7 @@ void WS2813_eProcess(void)
 
 			  		ledhandler.WS2813_pixel[0] = sColor;
 			  		WS2813_eSetColorval(&ledhandler, sColor, 0);
-			  		HAL_Delay(100);
+			  		osDelay(100);
 		  }
 
 	  }
